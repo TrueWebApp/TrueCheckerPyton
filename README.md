@@ -42,6 +42,7 @@ print("Bot profile:", profile)
 job = await checker.cancel_job(job.id)
 print("Job state:", job.state)  # Cancelled
 
+
 # Don't forget to close checker on your app's on_shutdown
 await checker.close()
 ```
