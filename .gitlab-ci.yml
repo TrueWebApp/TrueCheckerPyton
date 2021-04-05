@@ -1,26 +1,19 @@
 stages:
-  - lint
   - test
   - release
 
 
-mypy:
-    stage: lint
-    script:
-        - docker run --rm -v $(pwd):/data cytopia/mypy main.py
-
-# flake8:
-#     stage: lint
-#     script:
-#         - make flake
-
-# black:
-#     stage: lint
-#     script:
-#         - make black
+linters:
+  image: python:3.8-slim-buster
+  stage: test
+  script:
+    - pip install mypy flake8 black
+    - mypy truecheker/
+    - flake truecheker/
+    - black truecheker/
 
 
-run tests:
+pytest:
   stage: test
   image: python:3.8-slim-buster
   script:
@@ -33,12 +26,12 @@ run tests:
 
 
 pypi:
-    image: python:3.8-slim-buster
-    stage: release
-    cache: {}
-    script:
-        - pip install -U twine
-        - python setup.py sdist
-        - twine upload dist/*
-    only:
-        - tags
+  image: python:3.8-slim-buster
+  stage: release
+  cache: { }
+  script:
+    - pip install -U twine
+    - python setup.py sdist
+    - twine upload dist/*
+  only:
+    - tags
