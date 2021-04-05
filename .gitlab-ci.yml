@@ -26,6 +26,7 @@ pytest:
   artifacts:
     reports:
       cobertura: coverage.xml
+  coverage: '/TOTAL\s+\d+\s+\d+\s+(\d+%)/'
 
 
 pypi:
