@@ -5,9 +5,9 @@ if not disabled:
     try:
         import ujson as json
     except ImportError:
-        import json
+        import json  # type: ignore
 else:
-    import json
+    import json  # type: ignore
 
 
 def loads(data) -> dict:
