@@ -2,7 +2,7 @@ import asyncio
 import io
 import ssl
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional, Tuple, Union
 
 import certifi
 from aiohttp import ClientSession, FormData, TCPConnector
@@ -28,10 +28,12 @@ class BaseClient:
         )
         return self._session
 
-    async def _make_request(self, method: str, url: StrOrURL, **kwargs) -> dict:
+    async def _make_request(
+        self, method: str, url: StrOrURL, **kwargs
+    ) -> Tuple[int, dict]:
         session = self._get_session()
         result = await session.request(method, url, **kwargs)
-        return await result.json(loads=json.loads)
+        return result.status, await result.json(loads=json.loads)
 
     def _prepare_form(self, file: Union[str, Path, io.IOBase]):
         form = FormData()

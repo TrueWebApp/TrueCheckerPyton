@@ -4,6 +4,11 @@ from typing import Optional, Union
 
 from .base import BaseClient
 from .const import HTTPMethods
+from .exceptions import (
+    AlreadyRunning,
+    BadRequest,
+    Unauthorized,
+)
 from .models import CheckJob, Profile
 
 API_HOST = "https://checker.trueweb.app/api"
@@ -32,26 +37,32 @@ class TrueChecker(BaseClient):
             params["delay"] = delay
         form = self._prepare_form(file)
 
-        job_data = await self._make_request(method, url, params=params, data=form)
-        return CheckJob(**job_data)
+        status, data = await self._make_request(method, url, params=params, data=form)
+        if status != 200:
+            if status == 401:
+                raise Unauthorized(data["message"])
+            if status == 409:
+                raise AlreadyRunning(data["message"])
+            raise BadRequest(data["message"])
+        return CheckJob(**data)
 
     async def get_profile(self, username: str) -> Profile:
         """ Returns checked bot profile on success. """
         method = HTTPMethods.GET
         url = f"{self._api_host}/profile/{username}"
-        profile_data = await self._make_request(method, url)
+        status, profile_data = await self._make_request(method, url)
         return Profile(**profile_data)
 
     async def get_job_status(self, job_id: str) -> CheckJob:
         """ Returns current job status. """
         method = HTTPMethods.GET
         url = f"{self._api_host}/job/{job_id}"
-        job_data = await self._make_request(method, url)
+        status, job_data = await self._make_request(method, url)
         return CheckJob(**job_data)
 
     async def cancel_job(self, job_id: str) -> CheckJob:
         """ Cancel running Job. """
         method = HTTPMethods.DELETE
         url = f"{self._api_host}/job/{job_id}"
-        job_data = await self._make_request(method, url)
+        status, job_data = await self._make_request(method, url)
         return CheckJob(**job_data)
