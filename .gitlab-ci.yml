@@ -8,9 +8,9 @@ linters:
   stage: test
   script:
     - pip install mypy flake8 black
-    - mypy truecheker/
-    - flake truecheker/
-    - black truecheker/
+    - mypy .
+    - flake .
+    - black .
 
 
 pytest:
