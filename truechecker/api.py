@@ -11,19 +11,19 @@ API_HOST = "https://checker.trueweb.app/api"
 class TrueChecker(BaseClient):
     API_VERSION = "1.1.0"
 
-    def __init__(self, api_host: Optional[str] = None):
+    def __init__(self, token: str, api_host: Optional[str] = None):
         super().__init__()
+        self.__token = token
         self._api_host = api_host or API_HOST
 
     async def check_profile(
         self,
-        bot_token: str,
         file: Union[str, Path, io.IOBase],
         delay: Optional[float] = None,
     ) -> dict:
         """ Bot check request. """
         method = HTTPMethods.PUT
-        url = f"{self._api_host}/profile/{bot_token}"
+        url = f"{self._api_host}/profile/{self.__token}"
 
         # prepare params
         params = {}
