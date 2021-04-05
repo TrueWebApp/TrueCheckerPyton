@@ -20,7 +20,7 @@ class BaseClient:
             return self._session
 
         ssl_context = ssl.create_default_context(cafile=certifi.where())
-        connector = TCPConnector(ssl_context=ssl_context)
+        connector = TCPConnector(ssl=ssl_context)
 
         self._session = ClientSession(
             connector=connector,
