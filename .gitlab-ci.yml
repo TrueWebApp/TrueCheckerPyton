@@ -30,12 +30,11 @@ pytest:
 
 
 pypi:
-  image: python:3.8-slim-buster
+  image: python:3.8
   stage: release
-  cache: { }
   script:
-    - pip install -U twine
-    - python setup.py sdist
-    - twine upload dist/*
+    - pip install -U twine poetry
+    - poetry build
+    - poetry publish --username $TWINE_USERNAME --password $TWINE_PASSWORD
   only:
     - tags
