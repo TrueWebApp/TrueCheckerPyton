@@ -17,7 +17,9 @@ pytest:
   stage: test
   image: python:3.8-slim-buster
   script:
-    - pip install pytest pytest-cov
+    - pip install pytest pytest-cov poetry
+    - poetry export -f requirements.txt -o requirements.txt
+    - pip install -r requirements.txt
     - pytest --cov=truechecker/ tests/
     - coverage xml
   artifacts:
