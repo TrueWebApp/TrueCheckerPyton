@@ -1,3 +1,4 @@
+import asyncio
 import io
 import ssl
 from pathlib import Path
@@ -49,3 +50,13 @@ class BaseClient:
             return file.open("rb")
 
         raise TypeError("Not supported file type.")
+
+    async def close(self):
+        if not isinstance(self._session, ClientSession):
+            return
+
+        if self._session.closed:
+            return
+
+        await self._session.close()
+        await asyncio.sleep(0.25)
