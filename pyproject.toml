@@ -29,6 +29,7 @@ uvloop = [
     { version = "~0.15", platform = "darwin" },
 ]
 ciso8601 = { version = "~2.1", platform = "linux" }
+pydantic = "^1.8.1"
 
 
 [tool.poetry.dev-dependencies]
