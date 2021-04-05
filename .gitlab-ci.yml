@@ -9,7 +9,7 @@ linters:
   script:
     - pip install mypy flake8 black
     - mypy .
-    - flake .
+    - flake8 .
     - black .
 
 
