@@ -1,10 +1,13 @@
 import io
-import os
+import ssl
 from pathlib import Path
 from typing import Optional, Union
 
-from aiohttp import ClientSession, FormData
+import certifi
+from aiohttp import ClientSession, FormData, TCPConnector
 from aiohttp.typedefs import StrOrURL
+
+from .utils import json
 
 
 class BaseClient:
@@ -15,12 +18,19 @@ class BaseClient:
         if isinstance(self._session, ClientSession) and not self._session.closed:
             return self._session
 
-        self._session = ClientSession()
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+        connector = TCPConnector(ssl_context=ssl_context)
+
+        self._session = ClientSession(
+            connector=connector,
+            json_serialize=json.dumps,
+        )
         return self._session
 
-    async def _make_request(self, method: str, url: StrOrURL, **kwargs):
+    async def _make_request(self, method: str, url: StrOrURL, **kwargs) -> dict:
         session = self._get_session()
-        return await session.request(method, url, **kwargs)
+        result = await session.request(method, url, **kwargs)
+        return await result.json(loads=json.loads)
 
     def _prepare_form(self, file: Union[str, Path, io.IOBase]):
         form = FormData()
