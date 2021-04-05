@@ -4,6 +4,7 @@ from typing import Optional, Union
 
 from .base import BaseClient
 from .const import HTTPMethods
+from .models import CheckJob, Profile
 
 API_HOST = "https://checker.trueweb.app/api"
 
@@ -20,7 +21,7 @@ class TrueChecker(BaseClient):
         self,
         file: Union[str, Path, io.IOBase],
         delay: Optional[float] = None,
-    ) -> dict:
+    ) -> CheckJob:
         """ Bot check request. """
         method = HTTPMethods.PUT
         url = f"{self._api_host}/profile/{self.__token}"
@@ -31,22 +32,26 @@ class TrueChecker(BaseClient):
             params["delay"] = delay
         form = self._prepare_form(file)
 
-        return await self._make_request(method, url, params=params, data=form)
+        job_data = await self._make_request(method, url, params=params, data=form)
+        return CheckJob(**job_data)
 
-    async def get_profile(self, username: str):
+    async def get_profile(self, username: str) -> Profile:
         """ Returns checked bot profile on success. """
         method = HTTPMethods.GET
         url = f"{self._api_host}/profile/{username}"
-        return await self._make_request(method, url)
+        profile_data = await self._make_request(method, url)
+        return Profile(**profile_data)
 
-    async def get_job_status(self, job_id):
+    async def get_job_status(self, job_id) -> CheckJob:
         """ Returns current job status. """
         method = HTTPMethods.GET
         url = f"{self._api_host}/job/{job_id}"
-        return await self._make_request(method, url)
+        job_data = await self._make_request(method, url)
+        return CheckJob(**job_data)
 
-    async def cancel_job(self, job_id):
+    async def cancel_job(self, job_id) -> CheckJob:
         """ Cancel running Job. """
         method = HTTPMethods.DELETE
         url = f"{self._api_host}/job/{job_id}"
-        return await self._make_request(method, url)
+        job_data = await self._make_request(method, url)
+        return CheckJob(**job_data)
