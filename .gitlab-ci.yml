@@ -10,7 +10,7 @@ linters:
     - pip install mypy flake8 black
     - mypy .
     - flake8 .
-    - black .
+    - black --check .
 
 
 pytest:
