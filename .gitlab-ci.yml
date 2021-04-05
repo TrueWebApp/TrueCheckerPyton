@@ -1,0 +1,44 @@
+stages:
+  - lint
+  - test
+  - release
+
+
+mypy:
+    stage: lint
+    script:
+        - docker run --rm -v $(pwd):/data cytopia/mypy main.py
+
+# flake8:
+#     stage: lint
+#     script:
+#         - make flake
+
+# black:
+#     stage: lint
+#     script:
+#         - make black
+
+
+run tests:
+  stage: test
+  image: python:3.8-slim-buster
+  script:
+    - pip install pytest pytest-cov
+    - pytest --cov=truechecker/ tests/
+    - coverage xml
+  artifacts:
+    reports:
+      cobertura: coverage.xml
+
+
+pypi:
+    image: python:3.8-slim-buster
+    stage: release
+    cache: {}
+    script:
+        - pip install -U twine
+        - python setup.py sdist
+        - twine upload dist/*
+    only:
+        - tags
