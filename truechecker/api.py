@@ -16,10 +16,10 @@ class TrueChecker(BaseClient):
         self._api_host = api_host or API_HOST
 
     async def check_profile(
-            self,
-            bot_token: str,
-            file: Union[str, Path, io.IOBase],
-            delay: Optional[float] = None,
+        self,
+        bot_token: str,
+        file: Union[str, Path, io.IOBase],
+        delay: Optional[float] = None,
     ) -> dict:
         """ Bot check request. """
         method = HTTPMethods.PUT
