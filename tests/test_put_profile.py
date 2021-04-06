@@ -12,7 +12,7 @@ pytestmark = pytest.mark.asyncio
 
 class TestCheckProfile:
     async def test_success(self, checker: TrueChecker, file_path: str):
-        job = await checker.check_profile(file=file_path, delay=0.5)
+        job = await checker.check_profile(file=file_path, delay=1)
         print(f"Result: {job}")
         assert isinstance(job, CheckJob)
         await checker.cancel_job(job.id)
@@ -23,7 +23,7 @@ class TestCheckProfile:
 
     async def test_path_object(self, checker: TrueChecker, file_path: str):
         path = Path(file_path)
-        job = await checker.check_profile(file=path)
+        job = await checker.check_profile(file=path, delay=1)
         print(f"Result: {job}")
         assert isinstance(job, CheckJob)
         await checker.cancel_job(job.id)
@@ -32,7 +32,7 @@ class TestCheckProfile:
         file = open(file_path, "r")
         lines = file.readlines()
         file_io = StringIO("".join(lines))
-        job = await checker.check_profile(file=file_io)
+        job = await checker.check_profile(file=file_io, delay=1)
         print(f"Result: {job}")
         assert isinstance(job, CheckJob)
         await checker.cancel_job(job.id)

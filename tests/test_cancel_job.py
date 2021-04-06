@@ -9,7 +9,7 @@ pytestmark = pytest.mark.asyncio
 class TestCancelJob:
     async def test_cancel_job(self, checker: TrueChecker, file_path: str):
         # start a new job
-        job = await checker.check_profile(file=file_path)
+        job = await checker.check_profile(file=file_path, delay=1)
         assert isinstance(job, CheckJob)
 
         # cancel the same job
