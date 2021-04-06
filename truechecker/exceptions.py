@@ -6,13 +6,17 @@ class BadRequest(TrueCheckerException):
     pass
 
 
-class Unauthorized(TrueCheckerException):
+class Unauthorized(BadRequest):
     pass
 
 
-class AlreadyRunning(TrueCheckerException):
+class BadState(BadRequest):
     pass
 
 
-class ValidationError(TrueCheckerException):
+class ValidationError(BadRequest):
+    pass
+
+
+class NotFound(BadRequest):
     pass

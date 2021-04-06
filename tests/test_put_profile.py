@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 from truechecker import TrueChecker
-from truechecker.exceptions import AlreadyRunning, BadRequest, Unauthorized
+from truechecker.exceptions import BadState, BadRequest, Unauthorized
 from truechecker.models import CheckJob
 
 pytestmark = pytest.mark.asyncio
@@ -39,7 +39,7 @@ class TestCheckProfile:
 
     async def test_already_running(self, checker: TrueChecker, file_path: str):
         job = await checker.check_profile(file=file_path, delay=1)
-        with pytest.raises(AlreadyRunning):
+        with pytest.raises(BadState):
             result = await checker.check_profile(file=file_path)
             print(f"Result: {result}")
         await checker.cancel_job(job.id)

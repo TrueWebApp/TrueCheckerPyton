@@ -4,11 +4,6 @@ from typing import Optional, Union
 
 from .base import BaseClient
 from .const import HTTPMethods
-from .exceptions import (
-    AlreadyRunning,
-    BadRequest,
-    Unauthorized,
-)
 from .models import CheckJob, Profile
 
 API_HOST = "https://checker.trueweb.app/api"
@@ -38,12 +33,6 @@ class TrueChecker(BaseClient):
         form = self._prepare_form(file)
 
         status, data = await self._make_request(method, url, params=params, data=form)
-        if status != 200:
-            if status == 401:
-                raise Unauthorized(data["message"])
-            if status == 409:
-                raise AlreadyRunning(data["message"])
-            raise BadRequest(data["message"])
         return CheckJob(**data)
 
     async def get_profile(self, username: str) -> Profile:

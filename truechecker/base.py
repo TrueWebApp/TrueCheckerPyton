@@ -8,7 +8,22 @@ import certifi
 from aiohttp import ClientSession, FormData, TCPConnector
 from aiohttp.typedefs import StrOrURL
 
+from .exceptions import (
+    BadRequest,
+    BadState,
+    TrueCheckerException,
+    Unauthorized,
+    ValidationError,
+)
 from .utils import json
+
+EXC_MAPPING = {
+    400: BadRequest,
+    401: Unauthorized,
+    404: BadRequest,
+    409: BadState,
+    422: ValidationError,
+}
 
 
 class BaseClient:
@@ -33,7 +48,11 @@ class BaseClient:
     ) -> Tuple[int, dict]:
         session = self._get_session()
         result = await session.request(method, url, **kwargs)
-        return result.status, await result.json(loads=json.loads)
+        status = result.status
+        data = await result.json(loads=json.loads)
+        if status != 200:
+            raise self._process_exception(status, data)
+        return status, data
 
     def _prepare_form(self, file: Union[str, Path, io.IOBase]):
         form = FormData()
@@ -52,6 +71,12 @@ class BaseClient:
             return file.open("rb")
 
         raise TypeError("Not supported file type.")
+
+    @staticmethod
+    def _process_exception(status: int, data: dict) -> TrueCheckerException:
+        text = data.get("message") or data.get("detail")
+        exc = EXC_MAPPING.get(status, TrueCheckerException)
+        return exc(text)
 
     async def close(self):
         if not isinstance(self._session, ClientSession):
