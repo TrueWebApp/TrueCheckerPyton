@@ -23,6 +23,7 @@ pytest:
     - pip install -r requirements.txt
     - pytest --cov=truechecker/ tests/
     - coverage xml
+    - bash <(curl -s https://codecov.io/bash)
   artifacts:
     reports:
       cobertura: coverage.xml
