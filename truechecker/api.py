@@ -50,19 +50,19 @@ class TrueChecker(BaseClient):
         """ Returns checked bot profile on success. """
         method = HTTPMethods.GET
         url = f"{self._api_host}/profile/{username}"
-        status, profile_data = await self._make_request(method, url)
-        return Profile(**profile_data)
+        status, data = await self._make_request(method, url)
+        return Profile(**data)
 
     async def get_job_status(self, job_id: str) -> CheckJob:
         """ Returns current job status. """
         method = HTTPMethods.GET
         url = f"{self._api_host}/job/{job_id}"
-        status, job_data = await self._make_request(method, url)
-        return CheckJob(**job_data)
+        status, data = await self._make_request(method, url)
+        return CheckJob(**data)
 
     async def cancel_job(self, job_id: str) -> CheckJob:
         """ Cancel running Job. """
         method = HTTPMethods.DELETE
         url = f"{self._api_host}/job/{job_id}"
-        status, job_data = await self._make_request(method, url)
-        return CheckJob(**job_data)
+        status, data = await self._make_request(method, url)
+        return CheckJob(**data)
