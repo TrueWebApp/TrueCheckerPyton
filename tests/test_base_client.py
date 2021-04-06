@@ -15,3 +15,4 @@ class TestBaseClient:
     async def test_no_session_close(self, checker: TrueChecker):
         checker._session = None
         await checker.close()
+        assert checker._session is None
