@@ -18,9 +18,9 @@ pytest:
   stage: test
   image: python:3.8
   script:
-    - pip install pytest pytest-cov poetry
-    - poetry export --dev -f requirements.txt -o requirements.txt
-    - pip install -r requirements.txt
+    - pip install poetry
+    - poetry env use system
+    - poetry install --no-root
     - pytest --cov=truechecker/ tests/
     - coverage xml
     - bash <(curl -s https://codecov.io/bash)
