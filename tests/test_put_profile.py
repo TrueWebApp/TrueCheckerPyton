@@ -40,18 +40,15 @@ class TestCheckProfile:
     async def test_already_running(self, checker: TrueChecker, file_path: str):
         job = await checker.check_profile(file=file_path, delay=1)
         with pytest.raises(BadState):
-            result = await checker.check_profile(file=file_path)
-            print(f"Result: {result}")
+            await checker.check_profile(file=file_path)
         await checker.cancel_job(job.id)
 
     async def test_bad_token(self, file_path: str):
         checker = TrueChecker(None)  # noqa
         with pytest.raises(BadRequest):
-            result = await checker.check_profile(file=file_path)
-            print(f"Result: {result}")
+            await checker.check_profile(file=file_path)
 
     async def test_invalid_token(self, file_path: str):
         checker = TrueChecker("1234567890:qwertyuiop")  # noqa
         with pytest.raises(Unauthorized):
-            result = await checker.check_profile(file=file_path)
-            print(f"Result: {result}")
+            await checker.check_profile(file=file_path)
