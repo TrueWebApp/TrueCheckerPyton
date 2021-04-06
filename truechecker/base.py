@@ -31,6 +31,7 @@ class BaseClient:
         self._session: Optional[ClientSession] = None
 
     def _get_session(self):
+        """ Get cached session. One session per instance. """
         if isinstance(self._session, ClientSession) and not self._session.closed:
             return self._session
 
@@ -46,21 +47,34 @@ class BaseClient:
     async def _make_request(
         self, method: str, url: StrOrURL, **kwargs
     ) -> Tuple[int, dict]:
+        """
+        Make a request.
+
+        :param method: HTTP Method
+        :param url: endpoint link
+        :param kwargs: data, params, json and other...
+        :return: status and result or exception
+        """
         session = self._get_session()
-        result = await session.request(method, url, **kwargs)
-        status = result.status
-        data = await result.json(loads=json.loads)
+
+        async with session.request(method, url, **kwargs) as response:
+            status = response.status
+            data = await response.json(loads=json.loads)
+
         if status != 200:
             raise self._process_exception(status, data)
+
         return status, data
 
-    def _prepare_form(self, file: Union[str, Path, io.IOBase]):
+    def _prepare_form(self, file: Union[str, Path, io.IOBase]) -> FormData:
+        """ Create form to pass file via multipart/form-data. """
         form = FormData()
         form.add_field("file", self._prepare_file(file))
         return form
 
     @staticmethod
     def _prepare_file(file: Union[str, Path, io.IOBase]):
+        """ Prepare accepted types to correct file type. """
         if isinstance(file, str):
             return open(file, "rb")
 
@@ -74,11 +88,18 @@ class BaseClient:
 
     @staticmethod
     def _process_exception(status: int, data: dict) -> TrueCheckerException:
+        """
+        Wrap API exceptions
+        :param status: response status
+        :param data: response json converted to dict()
+        :return: wrapped exception
+        """
         text = data.get("message") or data.get("detail")
         exc = EXC_MAPPING.get(status, TrueCheckerException)
         return exc(text)
 
     async def close(self):
+        """ Graceful session close. """
         if not isinstance(self._session, ClientSession):
             return
 
