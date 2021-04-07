@@ -41,8 +41,6 @@ repos:
         language: system
         pass_filenames: false
 
-  - repo: local
-    hooks:
       - id: update-dev-requirements-txt
         name: update-dev-requirements-txt
         description: 'Generate requirements_dev.txt based on poetry.lock'
