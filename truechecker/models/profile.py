@@ -1,3 +1,5 @@
+"""Pydantic model represents Telegram bot profile."""
+
 from datetime import datetime
 
 from pydantic import BaseModel

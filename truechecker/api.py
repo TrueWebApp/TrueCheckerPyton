@@ -54,7 +54,7 @@ class TrueChecker(BaseClient):
         if delay is not None:
             params["delay"] = delay
 
-        status, data = await self._make_request(method, url, params=params, data=form)
+        data = await self._make_request(method, url, params=params, data=form)
         return CheckJob(**data)
 
     async def get_profile(self, username: str) -> Profile:
@@ -67,7 +67,7 @@ class TrueChecker(BaseClient):
         method = HTTPMethods.GET
         url = f"{self._api_host}/profile/{username}"
 
-        status, data = await self._make_request(method, url)
+        data = await self._make_request(method, url)
         return Profile(**data)
 
     async def get_job_status(self, job_id: str) -> CheckJob:
@@ -80,7 +80,7 @@ class TrueChecker(BaseClient):
         method = HTTPMethods.GET
         url = f"{self._api_host}/job/{job_id}"
 
-        status, data = await self._make_request(method, url)
+        data = await self._make_request(method, url)
         return CheckJob(**data)
 
     async def cancel_job(self, job_id: str) -> CheckJob:
@@ -96,5 +96,5 @@ class TrueChecker(BaseClient):
         method = HTTPMethods.DELETE
         url = f"{self._api_host}/job/{job_id}"
 
-        status, data = await self._make_request(method, url)
+        data = await self._make_request(method, url)
         return CheckJob(**data)

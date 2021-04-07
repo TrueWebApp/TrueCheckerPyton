@@ -1,8 +1,10 @@
+"""Base aiohttp client class module."""
+
 import asyncio
 import io
 import ssl
 from pathlib import Path
-from typing import Optional, Tuple, Union
+from typing import Optional, Union
 
 import certifi
 from aiohttp import ClientSession, FormData, TCPConnector
@@ -48,7 +50,7 @@ class BaseClient:
         """
         self._session: Optional[ClientSession] = None
 
-    def _get_session(self):
+    def get_session(self):
         """Get cached session. One session per instance."""
         if isinstance(self._session, ClientSession) and not self._session.closed:
             return self._session
@@ -62,9 +64,7 @@ class BaseClient:
         )
         return self._session
 
-    async def _make_request(
-        self, method: str, url: StrOrURL, **kwargs
-    ) -> Tuple[int, dict]:
+    async def _make_request(self, method: str, url: StrOrURL, **kwargs) -> dict:
         """
         Make a request.
 
@@ -73,7 +73,7 @@ class BaseClient:
         :param kwargs: data, params, json and other...
         :return: status and result or exception
         """
-        session = self._get_session()
+        session = self.get_session()
 
         async with session.request(method, url, **kwargs) as response:
             status = response.status
@@ -82,7 +82,7 @@ class BaseClient:
         if status != 200:
             raise self._process_exception(status, data)
 
-        return status, data
+        return data
 
     def _prepare_form(self, file: Union[str, Path, io.IOBase]) -> FormData:
         """Create form to pass file via multipart/form-data."""

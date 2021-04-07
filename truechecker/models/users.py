@@ -1,3 +1,5 @@
+"""Pydantic model represents Telegram bot users statistics."""
+
 from pydantic import BaseModel
 
 

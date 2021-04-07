@@ -7,7 +7,7 @@ pytestmark = pytest.mark.asyncio
 
 class TestBaseClient:
     async def test_checker_double_close(self, checker: TrueChecker):
-        checker._get_session()
+        checker.get_session()
         await checker.close()
         await checker.close()
         assert checker._session.closed
