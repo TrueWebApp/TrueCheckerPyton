@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 from truechecker import TrueChecker
-from truechecker.exceptions import BadState, BadRequest, Unauthorized
+from truechecker.exceptions import BadRequest, BadState, Unauthorized
 from truechecker.models import CheckJob
 
 pytestmark = pytest.mark.asyncio
