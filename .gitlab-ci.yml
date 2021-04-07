@@ -7,9 +7,13 @@ linters:
   image: python:3.8-slim-buster
   stage: test
   script:
-    - apt install make
     - pip install -r requirements_dev.txt
-    - make lint
+    - isort . --profile black
+    - black .
+    - mypy -p truechecker
+    - flake8 .
+    - pylint truechecker --ignored-modules=pydantic
+    - pydocstyle truechecker
 
 
 pytest:
