@@ -56,7 +56,7 @@ specification for adding human and machine-readable meaning to commit messages.
 
 The commit message should be structured as follows:
 
-#### Commit message structure
+**Commit message structure:**
 
 ```
 <type>[optional scope]: <description>
@@ -66,7 +66,7 @@ The commit message should be structured as follows:
 [optional footer(s)]
 ```
 
-#### Examples:
+**Examples:**
 
 ```
 feat: implemented graceful close
