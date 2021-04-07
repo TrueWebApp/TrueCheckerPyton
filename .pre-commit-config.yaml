@@ -33,9 +33,18 @@ repos:
 
   - repo: local
     hooks:
+      - id: update-poetry-lock
+        name: update poetry.lock
+        entry: poetry update
+        files: "^pyproject.toml$"
+        language: system
+        pass_filenames: false
+        require_serial: true
+
       - id: update-requirements-txt
         name: update requirements.txt
         entry: make requirements
         files: "^pyproject.toml$"
         language: system
         pass_filenames: false
+        require_serial: true
