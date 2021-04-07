@@ -1,13 +1,15 @@
 # True Checker for Python
 
-Python client library for True Checker API
+Python client library for [True Checker API](https://checker.trueweb.app/redoc)
 
 ## How to install
+
 ```bash
 pip install truechecker
 ```
 
 ## How to use
+
 ```python
 # import TrueChecker
 from truechecker import TrueChecker
@@ -45,4 +47,9 @@ print("Job state:", job.state)  # Cancelled
 
 # Don't forget to close checker on your app's on_shutdown
 await checker.close()
+
 ```
+_CAUTION: it's not a full code example. Await statements should be used within coroutines only._
+
+## Contributing
+Before making Pull/Merge Requests, please read the [Contributing guidelines](CONTRIBUTING.md)
