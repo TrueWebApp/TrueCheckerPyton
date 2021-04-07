@@ -1,22 +1,47 @@
+"""True Checker API exceptions."""
+
+
 class TrueCheckerException(Exception):
-    pass
+    """Base (root) True Checker exception."""
 
 
 class BadRequest(TrueCheckerException):
-    pass
+    """
+    Base Bad Request exception.
+
+    Status: 400
+    """
 
 
 class Unauthorized(BadRequest):
-    pass
+    """
+    Unauthorized exception.
+
+    Occurs on troubles with Telegram token.
+    Status: 401
+    """
 
 
 class BadState(BadRequest):
-    pass
+    """
+    State conflict exception.
+
+    Occurs if current state is not fits for request.
+    Status: 409
+    """
 
 
 class ValidationError(BadRequest):
-    pass
+    """
+    Wrong params are passed to API method.
+
+    Status: 422
+    """
 
 
 class NotFound(BadRequest):
-    pass
+    """
+    Requested object is not found.
+
+    Status: 404
+    """

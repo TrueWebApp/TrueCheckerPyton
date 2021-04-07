@@ -1,3 +1,5 @@
+"""True Checker API client module."""
+
 import io
 from pathlib import Path
 from typing import Optional, Union
@@ -8,11 +10,24 @@ from .models import CheckJob, Profile
 
 
 class TrueChecker(BaseClient):
+    """
+    True Checker API client.
+
+    Consists of API methods only.
+    All other methods are hidden in the BaseClient.
+    """
+
     API_VERSION = "1.1.0"
     API_HOST = "https://checker.trueweb.app/api"
     API_DOCS = "https://checker.trueweb.app/redoc"
 
     def __init__(self, token: str, api_host: Optional[str] = None):
+        """
+        Init True Checker API client.
+
+        :param token: Telegram bot token
+        :param api_host: API host url (optional)
+        """
         super().__init__()
         self.__token = token
         self._api_host = api_host or self.API_HOST
@@ -44,7 +59,7 @@ class TrueChecker(BaseClient):
 
     async def get_profile(self, username: str) -> Profile:
         """
-        Returns checked bot profile on success.
+        Return checked bot profile on success.
 
         :param username: Bot username. Case insensitive
         :return: bot profile object or not found exception
@@ -70,7 +85,7 @@ class TrueChecker(BaseClient):
 
     async def cancel_job(self, job_id: str) -> CheckJob:
         """
-        Cancel running Job
+        Cancel running Job.
 
         Job will stop with minor delay.
         (it may continue working for some additional seconds)

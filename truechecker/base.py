@@ -27,11 +27,29 @@ EXC_MAPPING = {
 
 
 class BaseClient:
+    """
+    Base aiohttp client.
+
+    Consists of all methods need to make a request to API:
+     - session caching
+     - request wrapping
+     - exceptions wrapping
+     - grace session close
+     - e.t.c.
+    """
+
     def __init__(self):
+        """
+        Set defaults on object init.
+
+        By default `self._session` is None.
+        It will be created on a first API request.
+        The second request will use the same `self._session`.
+        """
         self._session: Optional[ClientSession] = None
 
     def _get_session(self):
-        """ Get cached session. One session per instance. """
+        """Get cached session. One session per instance."""
         if isinstance(self._session, ClientSession) and not self._session.closed:
             return self._session
 
@@ -67,14 +85,14 @@ class BaseClient:
         return status, data
 
     def _prepare_form(self, file: Union[str, Path, io.IOBase]) -> FormData:
-        """ Create form to pass file via multipart/form-data. """
+        """Create form to pass file via multipart/form-data."""
         form = FormData()
         form.add_field("file", self._prepare_file(file))
         return form
 
     @staticmethod
     def _prepare_file(file: Union[str, Path, io.IOBase]):
-        """ Prepare accepted types to correct file type. """
+        """Prepare accepted types to correct file type."""
         if isinstance(file, str):
             return open(file, "rb")
 
@@ -89,7 +107,8 @@ class BaseClient:
     @staticmethod
     def _process_exception(status: int, data: dict) -> TrueCheckerException:
         """
-        Wrap API exceptions
+        Wrap API exceptions.
+
         :param status: response status
         :param data: response json converted to dict()
         :return: wrapped exception
@@ -99,7 +118,7 @@ class BaseClient:
         return exc(text)
 
     async def close(self):
-        """ Graceful session close. """
+        """Close the session graceful."""
         if not isinstance(self._session, ClientSession):
             return
 

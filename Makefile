@@ -11,4 +11,11 @@ flake:
 mypy:
 	mypy -p truechecker
 
-lint: mypy black flake
+pydocstyle:
+	pydocstyle truechecker
+
+lint: mypy black flake pydocstyle
+
+requirements:
+	poetry export -E ultra --without-hashes -o requirements.txt
+	poetry export -E ultra --without-hashes -o requirements_dev.txt --dev
