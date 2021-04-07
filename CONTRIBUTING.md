@@ -42,7 +42,7 @@ Run the following command to install pre-commit into your git hooks and have it 
 commit:
 
 ```shell
-make pre-commit
+pre-commit install
 ```
 
 For more information on how it works, see the `.pre-commit-config.yaml` configuration file.
