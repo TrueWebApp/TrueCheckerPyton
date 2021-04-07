@@ -2,6 +2,9 @@ pre-commit:
 	pre-commit install
 	pre-commit autoupdate
 
+isort:
+	isort . --profile black
+
 black:
 	black .
 
@@ -14,7 +17,7 @@ mypy:
 pydocstyle:
 	pydocstyle truechecker
 
-lint: mypy black flake pydocstyle
+lint: isort mypy black flake pydocstyle
 
 requirements:
 	poetry export -E ultra --without-hashes -o requirements.txt
