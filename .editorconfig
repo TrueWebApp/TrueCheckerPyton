@@ -15,5 +15,10 @@ max_line_length = 88
 indent_style = space
 indent_size = 2
 
+[*.{md,txt}]
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = false
+
 [Makefile]
 indent_style = tab
