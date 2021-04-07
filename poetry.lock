@@ -574,7 +574,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 ultra = ["ujson", "uvloop"]
 
 [metadata]
-content-hash = "97598322d0ab25454872142e1655868f35cc2e386ee6fddd29cdd0ffa0288419"
+content-hash = "517e9facfdb171623688cdbd59b14a404ba423d68bb9de8ce8038cf2d96acae8"
 python-versions = "^3.7"
 
 [metadata.files]
