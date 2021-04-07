@@ -34,17 +34,19 @@ repos:
   - repo: local
     hooks:
       - id: update-requirements-txt
-        name: update-requirements-txt
+        name: update requirements.txt
         description: 'Generate requirements.txt based on poetry.lock'
-        entry: poetry
-        args: [ export, -E, ultra, --without-hashes, -f, requirements.txt, -o, requirements.txt ]
+        entry: poetry export
+        args: [ "-E ultra", "--without-hashes", "-f requirements.txt", "-o requirements.txt" ]
+        files: "^pyproject.toml$"
         language: system
         pass_filenames: false
 
       - id: update-dev-requirements-txt
-        name: update-dev-requirements-txt
+        name: update requirements_dev.txt
         description: 'Generate requirements_dev.txt based on poetry.lock'
-        entry: poetry
-        args: [ export, -E, ultra, --without-hashes, -f, requirements.txt, -o, requirements_dev.txt, --dev ]
+        entry: poetry export
+        args: [ "-E ultra", "--without-hashes", "-f requirements.txt", "-o requirements_dev.txt", "--dev" ]
+        files: "^pyproject.toml$"
         language: system
         pass_filenames: false
