@@ -18,8 +18,6 @@ a [Poetry Plugin](https://plugins.jetbrains.com/plugin/14307-poetry).
 
 For compatibility, TrueChecker also provides `requirements.txt` and `requirements_dev.txt`.
 
-These files should be updated by running `make requirements`.
-
 ## Coding style
 
 TrueChecker uses various tools to maintain a common coding style and help with development. To
