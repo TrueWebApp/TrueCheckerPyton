@@ -7,6 +7,7 @@ linters:
   image: python:3.8-slim-buster
   stage: test
   script:
+    - apt install make
     - pip install -r requirements_dev.txt
     - make lint
 
