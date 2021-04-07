@@ -18,7 +18,7 @@ repos:
     rev: 5.8.0
     hooks:
       - id: isort
-        args: [ "--profile", "black", "--filter-files" ]
+        args: [ --profile, black, --filter-files ]
 
   - repo: https://github.com/psf/black
     rev: 20.8b1
@@ -30,3 +30,23 @@ repos:
     rev: '3.9.0'
     hooks:
       - id: flake8
+
+  - repo: local
+    hooks:
+      - id: update-requirements-txt
+        name: update-requirements-txt
+        description: 'Generate requirements.txt based on poetry.lock'
+        entry: poetry
+        args: [ export, -E, ultra, --without-hashes, -f, requirements.txt, -o, requirements.txt ]
+        language: system
+        pass_filenames: false
+
+  - repo: local
+    hooks:
+      - id: update-dev-requirements-txt
+        name: update-dev-requirements-txt
+        description: 'Generate requirements_dev.txt based on poetry.lock'
+        entry: poetry
+        args: [ export, -E, ultra, --without-hashes, -f, requirements.txt, -o, requirements_dev.txt, --dev ]
+        language: system
+        pass_filenames: false
