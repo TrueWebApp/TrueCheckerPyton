@@ -68,6 +68,22 @@ profile = "black"
 multi_line_output = 3
 
 
+[tool.mypy]
+warn_redundant_casts = true
+warn_unused_ignores = false
+warn_no_return = true
+warn_unreachable = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = "*.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
+
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
