@@ -102,7 +102,7 @@ class BaseClient:
         if isinstance(file, Path):
             return file.open("rb")
 
-        raise TypeError("Not supported file type.")
+        raise TypeError(f"Not supported file type: `{type(file).__name__}`")
 
     @staticmethod
     def _process_exception(status: int, data: dict) -> TrueCheckerException:
