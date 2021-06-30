@@ -94,7 +94,7 @@ class BaseClient:
     def _prepare_file(file: Union[str, Path, io.IOBase]):
         """Prepare accepted types to correct file type."""
         if isinstance(file, str):
-            return open(file, "rb")
+            return Path(file).open("rb")
 
         if isinstance(file, io.IOBase):
             return file
