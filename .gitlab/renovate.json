@@ -1,0 +1,42 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "prConcurrentLimit": 0,
+  "rebaseWhen": "auto",
+  "masterIssue": true,
+  "pip_requirements": {
+    "fileMatch": [
+      "requirements.txt",
+      "requirements-dev.txt"
+    ]
+  },
+  "packageRules": [
+    {
+      "managers": [
+        "docker-compose",
+        "dockerfile"
+      ],
+      "updateTypes": [
+        "pin",
+        "digest"
+      ],
+      "enabled": false
+    },
+    {
+      "packagePatterns": [
+        "pytest"
+      ],
+      "separateMinorPatch": true
+    },
+    {
+      "packagePatterns": [
+        "pytest"
+      ],
+      "updateTypes": [
+        "patch"
+      ],
+      "enabled": false
+    }
+  ]
+}
