@@ -21,14 +21,6 @@ python = "^3.7"
 aiohttp = "^3.7"
 certifi = "^2021"
 pydantic = "^1.8"
-ujson = [
-    { version = "^4.0", platform = "linux", optional = true },
-    { version = "^4.0", platform = "darwin", optional = true },
-]
-uvloop = [
-    { version = "^0.15", platform = "linux", optional = true },
-    { version = "^0.15", platform = "darwin", optional = true },
-]
 
 
 [tool.poetry.dev-dependencies]
@@ -37,16 +29,12 @@ coverage = "^5.5"
 flake8 = "^3.9"
 isort = "^5.9"
 mypy = "^0.910"
-pre-commit = "^2.13"
+pre-commit = "^2.15"
 pydocstyle = "^6.1"
-pylint = "^2.8"
+pylint = "^2.11"
 pytest = "^6.2"
 pytest-asyncio = "^0.15"
 pytest-cov = "^2.12"
-
-
-[tool.poetry.extras]
-ultra = ["ujson", "uvloop"]
 
 
 [tool.black]
