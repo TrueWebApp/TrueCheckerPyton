@@ -4,10 +4,10 @@ import asyncio
 import io
 import ssl
 from pathlib import Path
-from typing import Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import certifi
-from aiohttp import ClientSession, FormData, TCPConnector
+from aiohttp import ClientSession, ContentTypeError, FormData, TCPConnector
 from aiohttp.typedefs import StrOrURL
 
 from .exceptions import (
@@ -77,7 +77,10 @@ class BaseClient:
 
         async with session.request(method, url, **kwargs) as response:
             status = response.status
-            data = await response.json(loads=json.loads)
+            try:
+                data = await response.json(loads=json.loads)
+            except ContentTypeError:
+                data = await response.text()
 
         if status != 200:
             raise self._process_exception(status, data)
@@ -105,7 +108,9 @@ class BaseClient:
         raise TypeError(f"Not supported file type: `{type(file).__name__}`")
 
     @staticmethod
-    def _process_exception(status: int, data: dict) -> TrueCheckerException:
+    def _process_exception(
+        status: int, data: Union[Dict[str, Any], str]
+    ) -> TrueCheckerException:
         """
         Wrap API exceptions.
 
@@ -113,7 +118,10 @@ class BaseClient:
         :param data: response json converted to dict()
         :return: wrapped exception
         """
-        text = data.get("message") or data.get("detail")
+        if isinstance(data, dict):
+            text = data.get("message") or data.get("detail")
+        else:
+            text = data
         exc = EXC_MAPPING.get(status, TrueCheckerException)
         return exc(text)
 
