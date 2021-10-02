@@ -7,7 +7,13 @@ from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
 import certifi
-from aiohttp import ClientSession, ContentTypeError, FormData, TCPConnector
+from aiohttp import (
+    ClientSession,
+    ClientTimeout,
+    ContentTypeError,
+    FormData,
+    TCPConnector,
+)
 from aiohttp.typedefs import StrOrURL
 
 from .exceptions import (
@@ -40,7 +46,7 @@ class BaseClient:
      - e.t.c.
     """
 
-    def __init__(self):
+    def __init__(self, timeout: Optional[ClientTimeout] = None):
         """
         Set defaults on object init.
 
@@ -48,6 +54,7 @@ class BaseClient:
         It will be created on a first API request.
         The second request will use the same `self._session`.
         """
+        self._timeout = timeout or ClientTimeout(total=0)
         self._session: Optional[ClientSession] = None
 
     def get_session(self):
@@ -61,6 +68,7 @@ class BaseClient:
         self._session = ClientSession(
             connector=connector,
             json_serialize=json.dumps,
+            timeout=self._timeout,
         )
         return self._session
 

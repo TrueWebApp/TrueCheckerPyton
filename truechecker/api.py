@@ -4,6 +4,8 @@ import io
 from pathlib import Path
 from typing import Optional, Union
 
+from aiohttp import ClientTimeout
+
 from .base import BaseClient
 from .const import HTTPMethods
 from .models import CheckJob, Profile
@@ -21,14 +23,20 @@ class TrueChecker(BaseClient):
     API_HOST = "https://checker.trueweb.app/api"
     API_DOCS = "https://checker.trueweb.app/redoc"
 
-    def __init__(self, token: str, api_host: Optional[str] = None):
+    def __init__(
+        self,
+        token: str,
+        api_host: Optional[str] = None,
+        timeout: Optional[ClientTimeout] = None,
+    ):
         """
         Init True Checker API client.
 
         :param token: Telegram bot token
         :param api_host: API host url (optional)
+        :param timeout: set session timeout, default is None
         """
-        super().__init__()
+        super().__init__(timeout=timeout)
         self.__token = token
         self._api_host = api_host or self.API_HOST
 
