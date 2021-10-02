@@ -25,7 +25,6 @@ repos:
         args:
           - --autofix
           - --no-sort-keys
-      - id: requirements-txt-fixer
       - id: trailing-whitespace
 
   - repo: https://github.com/pre-commit/mirrors-mypy
