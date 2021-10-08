@@ -25,7 +25,7 @@ class TrueChecker(BaseClient):
 
     def __init__(
         self,
-        token: str,
+        token: Optional[str] = None,
         api_host: Optional[str] = None,
         timeout: Optional[ClientTimeout] = None,
     ):
@@ -43,19 +43,27 @@ class TrueChecker(BaseClient):
     async def check_profile(
         self,
         file: Union[str, Path, io.IOBase],
+        token: Optional[str] = None,
         delay: Optional[float] = None,
     ) -> CheckJob:
         """
         Init new bot checking.
 
+        :param token: Telegram bot token
         :param file: Any format of user_id array (csv, one-per-line or
             other). Telegram IDs will be parsed via regexp, so don't
             provide other digits looks like an telegram chat ID.
         :param delay: Delay between typing requests
         :return: new job object
         """
+        token = token or self.__token
+        if token is None:
+            RuntimeError(
+                "Please provide `token` for `TrueChecker` instance "
+                "or pass it as a `check_profile` request param."
+            )
         method = HTTPMethods.PUT
-        url = f"{self._api_host}/profile/{self.__token}"
+        url = f"{self._api_host}/profile/{token}"
         form = self._prepare_form(file)
 
         params = {}

@@ -14,6 +14,15 @@ the [Releases](https://gitlab.com/true-web-app/true-checker/true-checker-python/
 
 ### Misc
 
+
+## v2021.10.10
+
+### Bugs
+
+- correct non-json response (for errors)
+- you shouldn't pass token to TrueChecker (but you can pass it with a request)
+
+
 ## v2020.4.7
 
 ### Bugs
