@@ -15,6 +15,13 @@ the [Releases](https://gitlab.com/true-web-app/true-checker/true-checker-python/
 ### Misc
 
 
+## v2021.10.11
+
+### Bugs
+
+- return `NotFound` on 404 status instead of `BadRequest`
+
+
 ## v2021.10.10
 
 ### Bugs

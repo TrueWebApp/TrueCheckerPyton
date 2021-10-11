@@ -8,7 +8,7 @@ black==21.9b0; python_full_version >= "3.6.2"
 certifi==2021.10.8
 cfgv==3.3.1; python_full_version >= "3.6.1"
 chardet==4.0.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.6"
-click==8.0.1; python_version >= "3.6" and python_full_version >= "3.6.2"
+click==8.0.3; python_version >= "3.6" and python_full_version >= "3.6.2"
 colorama==0.4.4; python_version >= "3.6" and python_version < "4.0" and sys_platform == "win32" and python_full_version >= "3.6.2" and platform_system == "Windows" and (python_version >= "3.6" and python_full_version < "3.0.0" and sys_platform == "win32" or sys_platform == "win32" and python_version >= "3.6" and python_full_version >= "3.5.0")
 coverage==5.5; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.5.0" and python_version < "4")
 distlib==0.3.3; python_full_version >= "3.6.1"
@@ -41,7 +41,7 @@ pytest-asyncio==0.15.1; python_version >= "3.6"
 pytest-cov==2.12.1; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.5.0")
 pytest==6.2.5; python_version >= "3.6"
 pyyaml==5.4.1; python_full_version >= "3.6.1"
-regex==2021.9.30; python_full_version >= "3.6.2"
+regex==2021.10.8; python_full_version >= "3.6.2"
 six==1.16.0; python_full_version >= "3.6.1"
 snowballstemmer==2.1.0; python_version >= "3.6"
 toml==0.10.2; python_full_version >= "3.6.1" and python_version >= "3.5" and (python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "4.0" or python_version >= "3.6" and python_version < "4.0" and python_full_version >= "3.3.0") and (python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.3.0" and python_version >= "3.6") and (python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0")

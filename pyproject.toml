@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "truechecker"
-version = "2021.10.10"
+version = "2021.10.11"
 description = "Python client for True Checker API"
 authors = ["Oleg A. <oleg@trueweb.app>"]
 maintainers = ["Oleg A. <oleg@trueweb.app>"]
