@@ -19,6 +19,7 @@ from aiohttp.typedefs import StrOrURL
 from .exceptions import (
     BadRequest,
     BadState,
+    NotFound,
     TrueCheckerException,
     Unauthorized,
     ValidationError,
@@ -28,7 +29,7 @@ from .utils import json
 EXC_MAPPING = {
     400: BadRequest,
     401: Unauthorized,
-    404: BadRequest,
+    404: NotFound,
     409: BadState,
     422: ValidationError,
 }
