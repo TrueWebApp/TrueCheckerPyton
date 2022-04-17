@@ -73,11 +73,11 @@ class TrueChecker(BaseClient):
         data = await self._make_request(method, url, params=params, data=form)
         return CheckJob(**data)
 
-    async def get_profile(self, username: str) -> Profile:
+    async def get_profile(self, username: Union[str, int]) -> Profile:
         """
         Return checked bot profile on success.
 
-        :param username: Bot username. Case insensitive
+        :param username: Bot id or username (case-insensitive)
         :return: bot profile object or not found exception
         """
         method = HTTPMethods.GET
