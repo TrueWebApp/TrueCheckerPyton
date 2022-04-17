@@ -2,7 +2,7 @@
 
 import io
 from pathlib import Path
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 from aiohttp import ClientTimeout
 
@@ -85,6 +85,23 @@ class TrueChecker(BaseClient):
 
         data = await self._make_request(method, url)
         return Profile(**data)
+
+    async def search_profile(self, name: str) -> List[Profile]:
+        """
+        Search bot profile by name or username.
+
+        Return up to 10 query-matched profiles. Search is processing for
+        fullname and username fields and working for full words only.
+        Typos are not allowed (will be added later).
+
+        :param name: Bot name or username
+        :return: list of bot profile objects or not found exception
+        """
+        method = HTTPMethods.GET
+        url = f"{self._api_host}/profile/search"
+
+        profiles = await self._make_request(method, url, params={"name": name})
+        return [Profile(**profile) for profile in profiles]
 
     async def get_job_status(self, job_id: str) -> CheckJob:
         """
