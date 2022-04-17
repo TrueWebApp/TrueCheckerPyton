@@ -4,7 +4,7 @@ stages:
 
 
 linters:
-  image: python3.9-slim
+  image: python:3.9-slim
   stage: test
   script:
     - pip install -U poetry
@@ -19,7 +19,7 @@ linters:
 
 pytest:
   stage: test
-  image: python3.9
+  image: python:3.9-slim
   script:
     - pip install -U poetry
     - poetry install
