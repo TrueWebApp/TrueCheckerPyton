@@ -1,10 +1,18 @@
 import os
 
 import pytest
+from pydantic import BaseSettings
 
 from truechecker import TrueChecker
 
 FILE_PATH = "tests/dataset/users.csv"
+
+
+class TestSettings(BaseSettings):
+    class Config:
+        env_prefix = "TEST_"
+
+    API_URL = "http://localhost/api"
 
 
 @pytest.fixture(name="token")
@@ -39,6 +47,7 @@ def file_path_fixture():
 
 @pytest.fixture(name="checker")
 async def checker_fixture(token):
-    checker = TrueChecker(token)
+    cfg = TestSettings()
+    checker = TrueChecker(token, api_host=cfg.API_URL)
     yield checker
     await checker.close()
