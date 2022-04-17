@@ -4,25 +4,27 @@ stages:
 
 
 linters:
-  image: python:3.8-slim-buster
+  image: python3.9-slim
   stage: test
   script:
-    - pip install -r requirements_dev.txt
-    - isort . --profile black
-    - black .
-    - mypy -p truechecker
-    - flake8 .
-    - pylint truechecker --ignored-modules=pydantic
-    - pydocstyle truechecker
+    - pip install -U poetry
+    - poetry install
+    - poetry run isort . --profile black
+    - poetry run black .
+    - poetry run mypy -p truechecker
+    - poetry run flake8 .
+    - poetry run pylint truechecker --ignored-modules=pydantic
+    - poetry run pydocstyle truechecker
 
 
 pytest:
   stage: test
-  image: python:3.8
+  image: python3.9
   script:
-    - pip install -r requirements_dev.txt
-    - pytest --cov=truechecker/ tests/
-    - coverage xml
+    - pip install -U poetry
+    - poetry install
+    - poetry run pytest --cov=truechecker/ tests/
+    - poetry run coverage xml
     - bash <(curl -s https://codecov.io/bash)
   artifacts:
     reports:
@@ -31,7 +33,7 @@ pytest:
 
 
 pypi:
-  image: python:3.8
+  image: python:3.9
   stage: release
   script:
     - pip install -U twine poetry
