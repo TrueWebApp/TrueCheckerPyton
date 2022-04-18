@@ -131,3 +131,20 @@ class TrueChecker(BaseClient):
 
         data = await self._make_request(method, url)
         return CheckJob(**data)
+
+    async def cancel_all_jobs(self, token: Optional[str] = None) -> List[str]:
+        """
+        Cancel all running Jobs for the given bot.
+
+        Jobs will stop with minor delay
+        (it may continue working for some additional seconds)
+
+        :param token: Bot token
+        :return: list if job ID / not found
+        """
+        token = token or self.__token
+        method = HTTPMethods.DELETE
+        url = f"{self._api_host}/job/all/bot/{token}"
+
+        result = await self._make_request(method, url)
+        return result.get("details", [])
