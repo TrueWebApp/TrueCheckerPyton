@@ -1,3 +1,5 @@
+import asyncio
+
 import pytest
 
 from truechecker import TrueChecker
@@ -16,3 +18,4 @@ class TestCancelJob:
         cancelled_job = await checker.cancel_job(job.id)
         print(f"Result: {cancelled_job}")
         assert isinstance(cancelled_job, CheckJob)
+        await asyncio.sleep(10)

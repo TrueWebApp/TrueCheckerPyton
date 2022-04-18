@@ -1,3 +1,4 @@
+import asyncio
 from io import StringIO
 from pathlib import Path
 
@@ -16,6 +17,7 @@ class TestCheckProfile:
         print(f"Result: {job}")
         assert isinstance(job, CheckJob)
         await checker.cancel_job(job.id)
+        await asyncio.sleep(10)
 
     async def test_bad_file(self, checker: TrueChecker):
         with pytest.raises(TypeError):
@@ -27,6 +29,7 @@ class TestCheckProfile:
         print(f"Result: {job}")
         assert isinstance(job, CheckJob)
         await checker.cancel_job(job.id)
+        await asyncio.sleep(10)
 
     async def test_file_io(self, checker: TrueChecker, file_path: str):
         file = open(file_path, "r")
@@ -36,12 +39,14 @@ class TestCheckProfile:
         print(f"Result: {job}")
         assert isinstance(job, CheckJob)
         await checker.cancel_job(job.id)
+        await asyncio.sleep(10)
 
     async def test_already_running(self, checker: TrueChecker, file_path: str):
         job = await checker.check_profile(file=file_path, delay=1)
         with pytest.raises(BadState):
             await checker.check_profile(file=file_path)
         await checker.cancel_job(job.id)
+        await asyncio.sleep(10)
 
     async def test_bad_token(self, file_path: str):
         checker = TrueChecker(None)  # noqa
