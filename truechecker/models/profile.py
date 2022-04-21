@@ -10,6 +10,7 @@ from .users import Users
 class Profile(BaseModel):  # pylint: disable=too-few-public-methods
     """Telegram bot profile model."""
 
+    id: int
     username: str
     full_name: str
     updated: datetime
